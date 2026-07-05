@@ -20,38 +20,47 @@ The project demonstrates how to collect metrics from both a MongoDB database and
 - MongoDB
 - MongoDB Exporter
 - Windows Exporter
-- Linux
-
 ---
 
 ## Architecture
 
-```
-                +----------------------+
-                |    Windows Machine   |
-                |  Windows Exporter    |
-                +----------+-----------+
-                           |
-                           |
-                           v
-+-------------+      +--------------+
-|  MongoDB    | ---> | Mongo Export |
-+-------------+      +--------------+
-         \                 /
-          \               /
-           \             /
-            v           v
-          +------------------+
-          |   Prometheus     |
-          | Metrics Collector|
-          +--------+---------+
-                   |
-                   |
-                   v
-             +------------+
-             |  Grafana   |
-             | Dashboards |
-             +------------+
+```text
+                    ┌──────────────┐
+                    │   MongoDB    │
+                    └──────┬───────┘
+                           │
+                           │
+                    Database Metrics
+                           │
+                           ▼
+                 ┌──────────────────┐
+                 │ MongoDB Exporter │
+                 └────────┬─────────┘
+                          │
+                    HTTP /metrics
+                          │
+                          │
+┌─────────────────────┐   │
+│ Windows Exporter    │───┘
+│ CPU / RAM / Disk    │
+│ Network Metrics      │
+└──────────┬──────────┘
+           │
+     HTTP /metrics
+           │
+           ▼
+   ┌───────────────────┐
+   │    Prometheus     │
+   │  Metrics Storage  │
+   └─────────┬─────────┘
+             │
+      PromQL Queries
+             │
+             ▼
+      ┌──────────────┐
+      │   Grafana    │
+      │ Dashboards   │
+      └──────────────┘
 ```
 
 ---
