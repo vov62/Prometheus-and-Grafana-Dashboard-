@@ -1,0 +1,21 @@
+}    });        value: Math.random()        createdAt: new Date(),    db.employees.insertOne({while (true) {
+}    );        { $set: { active: true } }        { employeeId: i },    db.employees.updateOne(for (let i = 1; i <= 300; i++) {
+}    db.employees.find({ department: "IT" }).toArray();for (let i = 0; i < 1000; i++) {
+db.employees.countDocuments()
+}    db.employees.find({ department: "IT" }).toArray();for (let i = 0; i < 1000; i++) {
+}    });        createdAt: new Date()        city: "Jerusalem",        age: Math.floor(Math.random() * 40) + 20,        name: "Employee " + i,        employeeId: i,    db.employees.insertOne({for (let i = 1; i <= 10000; i++) {
+db.get
+}    db.employees.find({ department: "IT" }).toArray();for (let i = 0; i < 1000; i++) {
+}    });        createdAt: new Date()        salary: Math.floor(Math.random() * 10000),        department: "IT",        name: "Employee " + i,        employeeId: i,    db.employees.insertOne({for (let i = 1; i <= 300; i++) {
+use testdb
+exit
+use admin
+    });        createdAt: new Date()        salary: Math.floor(Math.random() * 10000),        department: "IT",        name: "Employee " + i,        employeeId: i,    db.employees.insertOne({for (let i = 1; i <= 300; i++) {
+db.createCollection("employees2")
+use testdb
+db.createCollection("employees2")
+use admin
+db.createCollection("employees2")
+use testdb
+exit
+use admin
