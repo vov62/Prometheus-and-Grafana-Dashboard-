@@ -20,38 +20,47 @@ The project demonstrates how to collect metrics from both a MongoDB database and
 - MongoDB
 - MongoDB Exporter
 - Windows Exporter
-- Linux
-
 ---
 
 ## Architecture
 
-```
-                +----------------------+
-                |    Windows Machine   |
-                |  Windows Exporter    |
-                +----------+-----------+
-                           |
-                           |
-                           v
-+-------------+      +--------------+
-|  MongoDB    | ---> | Mongo Export |
-+-------------+      +--------------+
-         \                 /
-          \               /
-           \             /
-            v           v
-          +------------------+
-          |   Prometheus     |
-          | Metrics Collector|
-          +--------+---------+
-                   |
-                   |
-                   v
-             +------------+
-             |  Grafana   |
-             | Dashboards |
-             +------------+
+```text
+                    ┌──────────────┐
+                    │   MongoDB    │
+                    └──────┬───────┘
+                           │
+                           │
+                    Database Metrics
+                           │
+                           ▼
+                 ┌──────────────────┐
+                 │ MongoDB Exporter │
+                 └────────┬─────────┘
+                          │
+                    HTTP /metrics
+                          │
+                          │
+┌─────────────────────┐   │
+│ Windows Exporter    │───┘
+│ CPU / RAM / Disk    │
+│ Network Metrics      │
+└──────────┬──────────┘
+           │
+     HTTP /metrics
+           │
+           ▼
+   ┌───────────────────┐
+   │    Prometheus     │
+   │  Metrics Storage  │
+   └─────────┬─────────┘
+             │
+      PromQL Queries
+             │
+             ▼
+      ┌──────────────┐
+      │   Grafana    │
+      │ Dashboards   │
+      └──────────────┘
 ```
 
 ---
@@ -93,9 +102,6 @@ monitoring-stack/
 ├── docker-compose.yml
 ├── prometheus/
 │   └── prometheus.yml
-├── grafana/
-│   ├── provisioning/
-│   └── dashboards/
 ├── mongodb/
 ├── images/
 │   └── dashboard.png
@@ -109,13 +115,13 @@ monitoring-stack/
 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/monitoring-stack.git
+git clone https://github.com/vov62/Prometheus-and-Grafana-Dashboard-.git
 ```
 
 Go into the project
 
 ```bash
-cd monitoring-stack
+cd prometheus and grafana
 ```
 
 Start the containers
@@ -157,9 +163,6 @@ During this project I learned how to:
 ## Future Improvements
 
 - [ ] Alertmanager integration
-- [ ] Email alerts
 - [ ] Kubernetes monitoring
 - [ ] Node Exporter on Linux
-- [ ] Dashboard provisioning
-- [ ] Persistent Grafana storage
 
