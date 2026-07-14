@@ -1,0 +1,66 @@
+groups:
+
+- name: mongodb-alerts
+
+  rules:
+    - alert: MongoDBDown
+      expr: mongodb_up == 0
+      for: 30s
+
+      labels:
+        service: mongodb
+        severity: critical 
+
+      annotations:
+        title: MongoDB Service Down
+        summary: MongoDB service is unavailable
+        description: The MongoDB exporter cannot reach the MongoDB instance.
+
+
+- name: windows-alerts
+  rules:
+    - alert: WindowsExporterDown
+      expr: up{job="windows"} == 0
+      for: 30s
+
+      labels:
+        service: windows_exporter
+        severity: critical 
+
+      annotations:
+        title: Windows Exporter Down
+        summary: Windows exporter is unavailable
+        description: The Prometheus server cannot reach the Windows exporter.
+    
+   
+    - alert: HighCPUUsage
+      expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[2m])) * 100) > 70
+      for: 2m
+
+      labels:
+        service: windows_exporter
+        severity: warning 
+
+      annotations:
+        title: High CPU Usage on Windows Host
+        summary: CPU usage is above 80%
+        description: The CPU usage on the Windows host has exceeded 80% for the last minute.
+
+      
+    - alert: LowDiskSpace
+      expr: |
+        (
+          windows_logical_disk_free_bytes{volume!=""}
+          /
+          windows_logical_disk_size_bytes{volume!=""}
+        ) * 100 < 15
+      for: 2m
+
+      labels:
+        service: windows_exporter
+        severity: warning
+
+      annotations:
+        title: "Low Disk Space"
+        summary: "Disk free space is below 15%."
+        description: "Drive {{ $labels.volume }} has less than 15% free space."
